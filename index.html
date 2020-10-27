@@ -57,6 +57,7 @@
       <dd>https://saitama-goto-eat.com/store.html</dt>
       <dt>住所から緯度経度への変換</dt>
       <dd>https://developer.yahoo.co.jp/webapi/map/openlocalplatform/v1/geocoder.html</dd>
+      <dd>(上記がダメだった場合) https://www.geocoding.jp/api/</dd>
       <dt>地図情報</dt>
       <dd>国土地理院ウェブサイト https://maps.gsi.go.jp/development/ichiran.html#std2</dd>
       <dt>作った人</dt>
@@ -88,8 +89,7 @@
     data.forEach((o) => {
       if(o.lon != 0){
         //var icon = L.divIcon({html: o.name, className: "label", iconSize:[100,30]})
-        var marker = L.marker([o.lon, o.lat]/*, {icon: icon}*/).addTo(map);
-        //上のマーカーにポップアップを追加する。
+        var marker = L.marker([o.lat, o.lon]/*, {icon: icon}*/).addTo(map);
         marker.bindPopup(o.name).openPopup();
       }else{
         eList.push(o);
