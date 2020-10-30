@@ -16,7 +16,7 @@
 
   <title>Go To Eat 埼玉 を地図に出してみた by @ina_ani</title>
   <meta name="og:title" content="Go To Eat 埼玉 を地図に出してみた by @ina_ani">
-  <meta name="og:description" content="Go To Eatの店舗を地図に出してみました。現在は埼玉県川口市、さいたま市浦和区の情報のみを表示しています。">
+  <meta name="og:description" content="Go To Eatの店舗を地図に出してみました。">
 
   <meta name="og:type" content="article">
   <meta name="og:image" content="https://inajob.github.io/go-to-eat-map/cover.png">
@@ -83,7 +83,6 @@
     <h1>Go To Eat 埼玉 を地図に出してみた by @ina_ani</h1>
     <div class="box">
       Go To Eatの店舗を地図に出してみました。<br/>
-      現在は埼玉県川口市、さいたま市浦和区 の情報のみを表示しています。<br/>
       <br/>
       これは埼玉県のGo To Eatの食事券が使える店舗です。<br/>
       これ以外に予約サイトのポイントがたまるというのもGo To Eatの施策がありますが、そちらに対応している店舗はもっとあるはずです。<br/>
@@ -120,8 +119,7 @@
   
   <div id="mapid"></div>
   <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
-  <script src="data/kawaguchi.js"></script>
-  <script src="data/urawa.js"></script>
+  <script src="data/saitama.js"></script>
   <script>
     var closeElm = document.getElementById("close");
     var closeElm2 = document.getElementById("close2");
@@ -131,7 +129,7 @@
     }
     closeElm.addEventListener("click", closeSplash);
     closeElm2.addEventListener("click", closeSplash);
-    var map = L.map('mapid').setView([35.688544, 139.764692], 14);
+    var map = L.map('mapid', {preferCanvas: true}).setView([35.85694,139.64889], 14);
     var mapServer = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
     mapServer = "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png";
     L.tileLayer(mapServer, {
@@ -139,14 +137,14 @@
     }).addTo(map);
     
     var eList = []
-    var data = []
-    data = data.concat(data_kawaguchi);
-    data = data.concat(data_urawa);
     data.forEach((o) => {
+      if(!o.name){return}
       if(o.lon != 0){
         //var icon = L.divIcon({html: o.name, className: "label", iconSize:[100,30]})
-        var marker = L.marker([o.lat, o.lon]/*, {icon: icon}*/).addTo(map);
-        marker.bindPopup(o.name).openPopup();
+        //var marker = L.marker([o.lat, o.lon]/*, {icon: icon}*/).addTo(map);
+        //marker.bindPopup(o.name).openPopup();
+        var marker = L.circleMarker([o.lat, o.lon], {color: "blue", radius: 5, weight: 3}).addTo(map);
+        marker.bindPopup(o.name);
       }else{
         eList.push(o);
       }
